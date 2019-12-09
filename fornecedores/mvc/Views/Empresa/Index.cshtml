@@ -1,0 +1,42 @@
+@model IEnumerable<mvc.Models.Empresa>
+
+@{
+    ViewData["Title"] = "Empresas";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Novo">Nova Empresa</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeFantasia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CNPJ)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeFantasia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CNPJ)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>
