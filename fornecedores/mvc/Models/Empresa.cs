@@ -1,33 +1,24 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using mvc.Models.Pessoas;
 
 namespace mvc.Models
 {
-    public class Empresa
+    public class Empresa :PessoaJuridica
     {
         public Empresa()
         {
-
+            base.TipoPessoa = "Jurídica empresa";
         }
-
-        public Empresa(string cNPJ, string uf, string nomeFantasia)
-        {
-            CNPJ = cNPJ;
-            UF = uf;
-            NomeFantasia = nomeFantasia;
-        }
-
-
-        [Required(ErrorMessage = "Campo obrigatório")]
-        public string CNPJ { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
         public string UF { get; set; }
 
-        [Required(ErrorMessage = "Campo obrigatório")]
-        public string NomeFantasia { get; set; }
 
-        public ICollection<Fornecedor> Fornecedores { get; set; }
+        public ICollection<FornecedorPessoaFisica> FornecedoresPessoaFisica { get; set; }
+
+
+        public ICollection<FornecedorPessoaJuridica> FornecedoresPessoaJuridica { get; set; }
 
         public void LimparCNPJ()
         {

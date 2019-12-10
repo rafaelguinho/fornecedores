@@ -1,24 +1,19 @@
 using System.ComponentModel.DataAnnotations;
-using System;
 using System.Collections.Generic;
+using System;
 
-namespace mvc.Models
+namespace mvc.Models.Pessoas
 {
-    public class Fornecedor
+    public abstract class Pessoa
     {
         public int Id { get; set; }
-
-        public string CNPJEmpresa { get; set; }
-        public Empresa Empresa { get; set; }
 
         public string Nome { get; set; }
 
         public DateTime DataCadastro { get; set; } = DateTime.Now;
 
-        public DateTime DataNascimento { get; set; }
-
-        public string RG { get; set; }
-
         public ICollection<Telefone> Telefones { get; set; }
+
+        public string TipoPessoa { get; set; }
     }
 }

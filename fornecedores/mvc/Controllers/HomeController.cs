@@ -1,26 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using mvc.Context;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using mvc.Models;
+using mvc.Models.Pessoas;
+using Microsoft.EntityFrameworkCore;
 
 namespace mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly FornecedoresContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(FornecedoresContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+             var fs = _context.Empresas.Include(s => s.FornecedoresPessoaFisica).ToList();
+
+            return View(fs);
         }
 
         public IActionResult Privacy()

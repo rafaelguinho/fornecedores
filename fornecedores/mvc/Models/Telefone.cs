@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using mvc.Models.Pessoas;
 
 namespace mvc.Models
 {
@@ -10,6 +11,6 @@ namespace mvc.Models
 
         public string Numero { get; set; }
 
-        public Fornecedor Fornecedor { get; set; }
+        public Pessoa Pessoa { get; set; }
     }
 }
