@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace mvc.Models
 {
@@ -9,12 +10,16 @@ namespace mvc.Models
 
         }
 
-        public Empresa(string uf, string nomeFantasia, string cNPJ)
+        public Empresa(string cNPJ, string uf, string nomeFantasia)
         {
+            CNPJ = cNPJ;
             UF = uf;
             NomeFantasia = nomeFantasia;
-            CNPJ = cNPJ;
         }
+
+
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public string CNPJ { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
         public string UF { get; set; }
@@ -22,11 +27,11 @@ namespace mvc.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public string NomeFantasia { get; set; }
 
-        [Required(ErrorMessage = "Campo obrigatório")]
-        public string CNPJ { get; set; }
+        public ICollection<Fornecedor> Fornecedores { get; set; }
 
-        public void LimparCNPJ(){
-            CNPJ = CNPJ.Replace(",","").Replace("-","").Replace(".","").Replace("/","");
+        public void LimparCNPJ()
+        {
+            CNPJ = CNPJ.Replace(",", "").Replace("-", "").Replace(".", "").Replace("/", "");
         }
     }
 }
