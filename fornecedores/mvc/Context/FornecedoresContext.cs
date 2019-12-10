@@ -15,7 +15,7 @@ namespace mvc.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Empresa>().HasKey(e => e.Id);
+            modelBuilder.Entity<Empresa>().HasKey(e => e.CNPJ);
         }
     }
 

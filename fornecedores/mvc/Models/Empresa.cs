@@ -16,8 +16,6 @@ namespace mvc.Models
             CNPJ = cNPJ;
         }
 
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "Campo obrigatório")]
         public string UF { get; set; }
 
@@ -26,5 +24,9 @@ namespace mvc.Models
 
         [Required(ErrorMessage = "Campo obrigatório")]
         public string CNPJ { get; set; }
+
+        public void LimparCNPJ(){
+            CNPJ = CNPJ.Replace(",","").Replace("-","").Replace(".","").Replace("/","");
+        }
     }
 }
