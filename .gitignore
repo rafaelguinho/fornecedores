@@ -18,22 +18,34 @@ nupkg/
 *.sln.docstates
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
+mvc/[Dd]ebug/
+mvc/[Dd]ebugPublic/
+mvc/[Rr]elease/
+mvc/[Rr]eleases/
+mvc/x64/
+mvc/x86/
+mvc/build/
+mvc/bld/
 mvc/[Bb]in/
 mvc/[Oo]bj/
+mvc/[Oo]ut/
+mvc/msbuild.log
+mvc/msbuild.err
+mvc/msbuild.wrn
+
+
+
+tests/[Dd]ebug/
+tests/[Dd]ebugPublic/
+tests/[Rr]elease/
+tests/[Rr]eleases/
+tests/x64/
+tests/x86/
+tests/build/
+tests/bld/
 tests/[Bb]in/
 tests/[Oo]bj/
-[Oo]ut/
-msbuild.log
-msbuild.err
-msbuild.wrn
+tests/[Oo]ut/
 
 # Visual Studio 2015
 .vs/
