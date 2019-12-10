@@ -26,9 +26,9 @@ fornecedores/mvc/x64/
 fornecedores/mvc/x86/
 fornecedores/mvc/build/
 fornecedores/mvc/bld/
-/fornecedores/mvc/[Bb]in/**
-/fornecedores/mvc/[Oo]bj/**
-/fornecedores/mvc/[Oo]ut/**
+fornecedores/mvc/[Bb]in/**
+fornecedores/mvc/[Oo]bj/**
+fornecedores/mvc/[Oo]ut/**
 fornecedores/mvc/msbuild.log
 fornecedores/mvc/msbuild.err
 fornecedores/mvc/msbuild.wrn
