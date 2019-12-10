@@ -26,8 +26,10 @@ x64/
 x86/
 build/
 bld/
-[Bb]in/
-[Oo]bj/
+mvc/[Bb]in/
+mvc/[Oo]bj/
+tests/[Bb]in/
+tests/[Oo]bj/
 [Oo]ut/
 msbuild.log
 msbuild.err
