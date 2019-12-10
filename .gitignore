@@ -26,10 +26,9 @@ fornecedores/mvc/x64/
 fornecedores/mvc/x86/
 fornecedores/mvc/build/
 fornecedores/mvc/bld/
-fornecedores/mvc/[Bb]in/
-fornecedores/mvc/[Bb]in/Debug/netcoreapp3.1
-fornecedores/mvc/[Oo]bj/
-fornecedores/mvc/[Oo]ut/
+fornecedores/mvc/[Bb]in/**
+fornecedores/mvc/[Oo]bj/**
+fornecedores/mvc/[Oo]ut/**
 fornecedores/mvc/msbuild.log
 fornecedores/mvc/msbuild.err
 fornecedores/mvc/msbuild.wrn
@@ -44,10 +43,9 @@ fornecedores/tests/x64/
 fornecedores/tests/x86/
 fornecedores/tests/build/
 fornecedores/tests/bld/
-fornecedores/tests/[Bb]in/
-fornecedores/tests/[Bb]in/Debug/netcoreapp3.1
-fornecedores/tests/[Oo]bj/
-fornecedores/tests/[Oo]ut/
+fornecedores/tests/[Bb]in/**
+fornecedores/tests/[Oo]bj/**
+fornecedores/tests/[Oo]ut/**
 
 # Visual Studio 2015
 .vs/
