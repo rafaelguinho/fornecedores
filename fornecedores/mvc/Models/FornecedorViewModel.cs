@@ -12,7 +12,6 @@ namespace mvc.Models
         {
             
         }
-
         public FornecedorViewModel(FornecedorPessoaJuridica pj, string nomeEmpresa)
         {
             CNPJ = pj.CNPJ;
@@ -28,13 +27,15 @@ namespace mvc.Models
             NomeEmpresa = nomeEmpresa;
         }
 
+        [Display(Name = "Empresa")]
         public string NomeEmpresa { get; set; }
 
         public string Nome { get; set; }
 
         public string TipoPessoa { get; set; }
 
-        public int IdEmpresa { get; set; }
+        [Display(Name = "Empresa")]
+        public int? IdEmpresa { get; set; }
 
         [Display(Name = "Data nascimento")]
         public DateTime? DataNascimento { get; set; }
@@ -55,7 +56,7 @@ namespace mvc.Models
             return new FornecedorPessoaJuridica
             {
                 CNPJ = CNPJ,
-                IdEmpresa = IdEmpresa,
+                IdEmpresa = IdEmpresa.Value,
                 Nome = Nome,
                 Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).ToList()
             };
@@ -67,7 +68,7 @@ namespace mvc.Models
             {
                 RG = RG,
                 DataNascimento = DataNascimento.Value,
-                IdEmpresa = IdEmpresa,
+                IdEmpresa = IdEmpresa.Value,
                 Nome = Nome,
                 Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).ToList()
             };

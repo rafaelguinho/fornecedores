@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using mvc.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace mvc.Controllers
 {
@@ -20,7 +21,20 @@ namespace mvc.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<FornecedorViewModel> viewModels = new List<FornecedorViewModel>();
+
+            var fornecedoresPF = _context.FornecedoresPessoaFisica.Include(s => s.Empresa).ToList();
+            var fornecedoresPJ = _context.FornecedoresPessoaJuridica.Include(s => s.Empresa).ToList();
+
+            if(fornecedoresPF.Count > 0){
+                viewModels.AddRange((fornecedoresPF.Select(f=> new FornecedorViewModel(f, f.Empresa.Nome))));
+            }
+
+            if(fornecedoresPJ.Count > 0){
+                viewModels.AddRange((fornecedoresPJ.Select(f=> new FornecedorViewModel(f, f.Empresa.Nome))));
+            }
+
+            return View(viewModels);
         }
 
         public IActionResult Novo()
@@ -38,10 +52,11 @@ namespace mvc.Controllers
 
             if (!ModelState.IsValid) return View(viewModel);
 
-            if (_context.Empresas.Any(e => e.CNPJ == viewModel.CNPJ) 
-            || _context.FornecedoresPessoaJuridica.Any(e => e.CNPJ == viewModel.CNPJ))
+            if ( _context.FornecedoresPessoaJuridica.Any(e => e.CNPJ == viewModel.CNPJ 
+                && e.IdEmpresa == viewModel.IdEmpresa.Value))
             {
-                ModelState.AddModelError("CNPJ", $"Empresa com o CNPJ {viewModel.CNPJ} já cadastrada");
+                ModelState.AddModelError("CNPJ", $@"Fornecedor com o 
+                                        CNPJ {viewModel.CNPJ} já cadastrada para empresa {viewModel.IdEmpresa.Value}");
                 return View(viewModel);
             }
 

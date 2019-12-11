@@ -29,8 +29,6 @@ namespace mvc.Context
             .HasValue<FornecedorPessoaJuridica>("Jurídica fornecedor")
             .HasValue<FornecedorPessoaFisica>("Física fornecedor");
 
-            modelBuilder.Entity<PessoaJuridica>().HasIndex(e => e.CNPJ).IsUnique();
-
             modelBuilder.Entity<Pessoa>().HasKey(e => e.Id);
 
             modelBuilder.Entity<Pessoa>()

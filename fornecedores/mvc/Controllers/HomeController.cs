@@ -14,29 +14,10 @@ namespace mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly FornecedoresContext _context;
-
-        public HomeController(FornecedoresContext context)
-        {
-            _context = context;
-        }
-
         public IActionResult Index()
         {
-             //var fs = _context.Empresas.Include(s => s.FornecedoresPessoaFisica).ToList();
-
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

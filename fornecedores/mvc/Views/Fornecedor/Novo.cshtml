@@ -61,18 +61,18 @@
             </div>
             <hr/>
             <h3>Telefone</h3>
-            <div class="row" id="telefones">
+            <div id="telefones">
 
                 @if(Model != null){
                     for(var i = 0; i < Model.Telefones.Count; i++){
 
-                        <input type="hidden" value="@Model.Telefones[0].Numero" indice = "@i" />
+                        <input type="hidden" name="tels" value="@Model.Telefones[i].Numero" indice = "@i" />
                     }
                 }
 
             </div>
             <button class="btn" onclick="adicionarTelefone(event)">Adicionar</button>
-
+<hr/>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
@@ -81,11 +81,12 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Ver fornecedores</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     <script type="text/javascript">
 
     var telefones = [{numero: ""}];
@@ -133,6 +134,17 @@
             
             mostrarEsconderPf($('input[name$="TipoPessoa"]').val());
 
+            var itens = $('input[name$="tels"]');
+
+            if(itens.length > 0){
+                telefones = [];
+
+                for(let i = 0; i< itens.length; i++){
+                    telefones.push({ numero: itens[i].value});
+                }
+                    
+            }
+
             rederizarTelefones();
             
             $('input[name$="TipoPessoa"]').on('click', function(){
@@ -143,9 +155,12 @@
                 if(value == "PF"){
                     $("#dadosPJ").hide();
                     $("#dadosPF").show();
+                    $('#CNPJ').val('');
                 }else if(value == "PJ"){
                     $("#dadosPJ").show();
                     $("#dadosPF").hide();
+                    $('#RG').val('');
+                    $('#DataNascimento').val('');
                 }
             }
         });
