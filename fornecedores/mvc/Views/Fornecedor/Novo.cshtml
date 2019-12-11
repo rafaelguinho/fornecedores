@@ -61,7 +61,16 @@
             </div>
             <hr/>
             <h3>Telefone</h3>
-            <div class="row" id="telefones"></div>
+            <div class="row" id="telefones">
+
+                @if(Model != null){
+                    for(var i = 0; i < Model.Telefones.Count; i++){
+
+                        <input type="hidden" value="@Model.Telefones[0].Numero" indice = "@i" />
+                    }
+                }
+
+            </div>
             <button class="btn" onclick="adicionarTelefone(event)">Adicionar</button>
 
             <div class="form-group">
@@ -79,12 +88,12 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script type="text/javascript">
 
-    var telefones = [{ddd: "", numero: ""}];
+    var telefones = [{numero: ""}];
 
     function adicionarTelefone(e){
         e.preventDefault();
 
-        telefones.push({ddd: "", numero: ""});
+        telefones.push({ numero: ""});
         rederizarTelefones();
     }
 
@@ -97,10 +106,6 @@
         rederizarTelefones();
     }
 
-    function mudarDDD(index, input){
-        telefones[index].ddd = input.value;
-    }
-
     function mudarNumero(index, input){
         telefones[index].numero = input.value;
     }
@@ -109,13 +114,6 @@
         var html = '';
             telefones.forEach((value, i)=>{
                html+= `<div class="row">
-                        <div class="form-group col-md-2">
-                            <label asp-for="Telefones[${i}].DDD" class="control-label"></label>
-                            <input value="${value.ddd}" onchange="mudarDDD(${i}, this)" name="Telefones[${i}].DDD" type="text" class="form-control" />
-                            <span asp-validation-for="Telefones[0].DDD" class="text-danger"></span>
-                        </div>
-
-
                         <div class="form-group col-md-7">
                             <label asp-for="Telefones[${i}].Numero" class="control-label"></label>
                             <input value="${value.numero}" onchange="mudarNumero(${i}, this)" name="Telefones[${i}].Numero" type="tel" class="form-control" />
@@ -126,7 +124,6 @@
                             <button class="btn btn-danger" onclick="removerTelefone(event, ${i})">X</button>
                         </div>
                     </div>`;
-                
             });
 
             $('#telefones').html(html);

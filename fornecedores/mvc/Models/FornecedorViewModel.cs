@@ -57,7 +57,7 @@ namespace mvc.Models
                 CNPJ = CNPJ,
                 IdEmpresa = IdEmpresa,
                 Nome = Nome,
-                Telefones = Telefones.Select(t => new Telefone { DDD = t.DDD, Numero = t.Numero }).ToList()
+                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).ToList()
             };
         }
 
@@ -69,14 +69,13 @@ namespace mvc.Models
                 DataNascimento = DataNascimento.Value,
                 IdEmpresa = IdEmpresa,
                 Nome = Nome,
-                Telefones = Telefones.Select(t => new Telefone { DDD = t.DDD, Numero = t.Numero }).ToList()
+                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).ToList()
             };
         }
 
     }
 
     public class TelefoneViewModel{
-        public string DDD { get; set; }
 
         [Display(Name = "Número")]
         public string Numero { get; set; }
