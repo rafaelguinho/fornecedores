@@ -7,6 +7,11 @@ namespace mvc.Models
 {
     public  class FornecedorPessoaJuridica: PessoaJuridica
     {
+        public FornecedorPessoaJuridica()
+        {
+            TipoPessoa = "Jurídica fornecedor";
+        }
+
         public int IdEmpresa { get; set; }
 
         public Empresa Empresa { get; set; }

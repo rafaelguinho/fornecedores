@@ -23,9 +23,9 @@ namespace mvc.Controllers
 
         public IActionResult Index()
         {
-             var fs = _context.Empresas.Include(s => s.FornecedoresPessoaFisica).ToList();
+             //var fs = _context.Empresas.Include(s => s.FornecedoresPessoaFisica).ToList();
 
-            return View(fs);
+            return View();
         }
 
         public IActionResult Privacy()

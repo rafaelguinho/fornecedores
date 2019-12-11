@@ -20,9 +20,6 @@ namespace mvc.Models
 
         public ICollection<FornecedorPessoaJuridica> FornecedoresPessoaJuridica { get; set; }
 
-        public void LimparCNPJ()
-        {
-            CNPJ = CNPJ.Replace(",", "").Replace("-", "").Replace(".", "").Replace("/", "");
-        }
+        
     }
 }

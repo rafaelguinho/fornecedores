@@ -4,6 +4,7 @@ using mvc.Context;
 using mvc.Models;
 using System.Collections.Generic;
 using System.Linq;
+using mvc.Extensions;
 
 namespace mvc.Controllers
 {
@@ -33,7 +34,7 @@ namespace mvc.Controllers
             PreencherUfs();
             if (!ModelState.IsValid) return View(empresa);
 
-            empresa.LimparCNPJ();
+            empresa.CNPJ = empresa.CNPJ?.LimparCNPJ();
 
             if (_context.Empresas.Any(e => e.CNPJ == empresa.CNPJ))
             {
