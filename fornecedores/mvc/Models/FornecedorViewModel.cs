@@ -17,6 +17,7 @@ namespace mvc.Models
             CNPJ = pj.CNPJ;
             Nome = pj.Nome;
             NomeEmpresa = nomeEmpresa;
+            DataCadastro = pj.DataCadastro;
         }
 
         public FornecedorViewModel(FornecedorPessoaFisica pf, string nomeEmpresa)
@@ -25,6 +26,7 @@ namespace mvc.Models
             DataNascimento = pf.DataNascimento;
             Nome = pf.Nome;
             NomeEmpresa = nomeEmpresa;
+            DataCadastro = pf.DataCadastro;
         }
 
         [Display(Name = "Empresa")]
@@ -39,6 +41,9 @@ namespace mvc.Models
 
         [Display(Name = "Data nascimento")]
         public DateTime? DataNascimento { get; set; }
+
+        [Display(Name = "Data cadastro")]
+        public DateTime DataCadastro { get; set; }
 
         public string RG { get; set; }
 
