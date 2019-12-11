@@ -21,6 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.CNPJ)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -35,7 +36,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CNPJ)
             </td>
-            
+            <td>
+                <a asp-action="VerFornecedores" asp-route-id="@item.Id" class="btn btn-secondary">Ver fornecedores</a>
+            </td>
         </tr>
 }
     </tbody>

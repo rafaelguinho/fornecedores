@@ -8,6 +8,28 @@ namespace mvc.Models
 {
     public class FornecedorViewModel
     {
+        public FornecedorViewModel()
+        {
+            
+        }
+
+        public FornecedorViewModel(FornecedorPessoaJuridica pj, string nomeEmpresa)
+        {
+            CNPJ = pj.CNPJ;
+            Nome = pj.Nome;
+            NomeEmpresa = nomeEmpresa;
+        }
+
+        public FornecedorViewModel(FornecedorPessoaFisica pf, string nomeEmpresa)
+        {
+            RG = pf.RG;
+            DataNascimento = pf.DataNascimento;
+            Nome = pf.Nome;
+            NomeEmpresa = nomeEmpresa;
+        }
+
+        public string NomeEmpresa { get; set; }
+
         public string Nome { get; set; }
 
         public string TipoPessoa { get; set; }
@@ -50,7 +72,6 @@ namespace mvc.Models
                 Telefones = Telefones.Select(t => new Telefone { DDD = t.DDD, Numero = t.Numero }).ToList()
             };
         }
-
 
     }
 

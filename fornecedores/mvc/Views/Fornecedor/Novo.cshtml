@@ -111,14 +111,14 @@
                html+= `<div class="row">
                         <div class="form-group col-md-2">
                             <label asp-for="Telefones[${i}].DDD" class="control-label"></label>
-                            <input value="${value.ddd}" onchange="mudarDDD(${i}, this)" asp-for="Telefones[${i}].DDD" type="text" class="form-control" />
+                            <input value="${value.ddd}" onchange="mudarDDD(${i}, this)" name="Telefones[${i}].DDD" type="text" class="form-control" />
                             <span asp-validation-for="Telefones[0].DDD" class="text-danger"></span>
                         </div>
 
 
                         <div class="form-group col-md-7">
                             <label asp-for="Telefones[${i}].Numero" class="control-label"></label>
-                            <input value="${value.numero}" onchange="mudarNumero(${i}, this)" asp-for="Telefones[${i}].Numero" type="tel" class="form-control" />
+                            <input value="${value.numero}" onchange="mudarNumero(${i}, this)" name="Telefones[${i}].Numero" type="tel" class="form-control" />
                             <span asp-validation-for="Telefones[${i}].Numero" class="text-danger"></span>
                         </div>
 
@@ -126,7 +126,6 @@
                             <button class="btn btn-danger" onclick="removerTelefone(event, ${i})">X</button>
                         </div>
                     </div>`;
-
                 
             });
 
@@ -134,17 +133,24 @@
     }
 
         $(document).ready(function () {
+            
+            mostrarEsconderPf($('input[name$="TipoPessoa"]').val());
+
             rederizarTelefones();
             
             $('input[name$="TipoPessoa"]').on('click', function(){
-                if(this.value == "PF"){
+                mostrarEsconderPf(this.value);
+            });
+
+            function mostrarEsconderPf(value){
+                if(value == "PF"){
                     $("#dadosPJ").hide();
                     $("#dadosPF").show();
-                }else if(this.value == "PJ"){
+                }else if(value == "PJ"){
                     $("#dadosPJ").show();
                     $("#dadosPF").hide();
                 }
-            });
+            }
         });
     </script>
 }
