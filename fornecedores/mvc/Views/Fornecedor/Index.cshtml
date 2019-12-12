@@ -1,4 +1,4 @@
-@model IEnumerable<mvc.Models.FornecedorViewModel>
+@model mvc.Models.BuscarFornecedoresViewModel
 
 @{
     ViewData["Title"] = "Fornecedores";
@@ -9,32 +9,54 @@
 <p>
     <a asp-action="Novo">Novo fornecedor</a>
 </p>
+
+
+<form class="form-inline" asp-action="Buscar" method="GET">
+  <div class="form-group mb-4">
+    <label asp-for="Nome" class="control-label"></label>
+    <input asp-for="Nome" class="form-control" />
+  </div>
+  <div class="form-group mb-3">
+    <label asp-for="CPFCNPJ" class="control-label"></label>
+    <input asp-for="CPFCNPJ" class="form-control" />
+  </div>
+  <div class="form-group mb-2">
+    <label asp-for="DataCadastro" class="control-label"></label>
+    <input asp-for="DataCadastro" type="date" class="form-control" />
+  </div>
+
+  <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+</form>
+
 <table class="table table-bordered">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataCadastro)
+                Data cadastro
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NomeEmpresa)
+                Nome empresa
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CPFCNPJ)
+                CPF/CNPJ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RG)
+                RG
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataNascimento)
+                Data nascimento
+            </th>
+            <th>
+                Telefones
             </th>
             
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Fornecedores) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
@@ -53,6 +75,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataNascimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelefonesView)
             </td>
             
         </tr>

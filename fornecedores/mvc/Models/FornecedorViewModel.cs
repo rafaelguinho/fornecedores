@@ -19,6 +19,7 @@ namespace mvc.Models
             Nome = pj.Nome;
             NomeEmpresa = nomeEmpresa;
             DataCadastro = pj.DataCadastro;
+            TelefonesView = UnirTelefones(pj.Telefones);
         }
 
         public FornecedorViewModel(FornecedorPessoaFisica pf, string nomeEmpresa)
@@ -29,6 +30,14 @@ namespace mvc.Models
             Nome = pf.Nome;
             NomeEmpresa = nomeEmpresa;
             DataCadastro = pf.DataCadastro;
+            TelefonesView = UnirTelefones(pf.Telefones);
+        }
+
+        private string UnirTelefones(ICollection<Telefone> telefones)
+        {
+            if (telefones == null) return string.Empty;
+
+            return string.Join(",", telefones.Select(t => t.Numero).ToArray());
         }
 
         [Display(Name = "Empresa")]
@@ -57,6 +66,8 @@ namespace mvc.Models
         [Display(Name = "CPF/CNPJ")]
         public string CPFCNPJ { get; set; }
 
+        public string TelefonesView { get; set; }
+
         public List<TelefoneViewModel> Telefones { get; set; } = new List<TelefoneViewModel>();
 
         public FornecedorPessoaJuridica ConverterPessoaJuridica()
@@ -66,7 +77,7 @@ namespace mvc.Models
                 CNPJ = CNPJ,
                 IdEmpresa = IdEmpresa.Value,
                 Nome = Nome,
-                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).Where(t=> !string.IsNullOrEmpty(t.Numero)).ToList()
+                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).Where(t => !string.IsNullOrEmpty(t.Numero)).ToList()
             };
         }
 
@@ -79,7 +90,7 @@ namespace mvc.Models
                 DataNascimento = DataNascimento.Value,
                 IdEmpresa = IdEmpresa.Value,
                 Nome = Nome,
-                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).Where(t=> !string.IsNullOrEmpty(t.Numero)).ToList()
+                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).Where(t => !string.IsNullOrEmpty(t.Numero)).ToList()
             };
         }
 

@@ -22,22 +22,45 @@ namespace mvc.Controllers
 
         public IActionResult Index()
         {
+            var busca = new BuscarFornecedoresViewModel
+            {
+                Fornecedores = ObterFornecedores()
+            };
+
+            return View(busca);
+        }
+
+        public IActionResult Buscar(BuscarFornecedoresViewModel viewModel)
+        {
+            var fornecedores = ObterFornecedores();
+
+            fornecedores  = string.IsNullOrEmpty(viewModel.Nome)? fornecedores: fornecedores.Where(f=>f.Nome.ToLower().Contains(viewModel.Nome.ToLower())).ToList();
+
+            fornecedores = (!viewModel.DataCadastro.HasValue)? fornecedores : fornecedores.Where(f=>f.DataCadastro.Date == viewModel.DataCadastro.Value.Date).ToList();
+
+            fornecedores = string.IsNullOrEmpty(viewModel.CPFCNPJ)? fornecedores : fornecedores.Where(f=>f.CPFCNPJ == viewModel.CPFCNPJ.LimparCNPJCPF()).ToList();
+
+            viewModel.Fornecedores = fornecedores;
+
+            return View("Index", viewModel);
+        }
+
+        private List<FornecedorViewModel> ObterFornecedores()
+        {
             List<FornecedorViewModel> viewModels = new List<FornecedorViewModel>();
 
-            var fornecedoresPF = _context.FornecedoresPessoaFisica.Include(s => s.Empresa).ToList();
-            var fornecedoresPJ = _context.FornecedoresPessoaJuridica.Include(s => s.Empresa).ToList();
+            var fornecedoresPF = _context.FornecedoresPessoaFisica.Include(s => s.Empresa).Include(s=>s.Telefones).ToList();
+            var fornecedoresPJ = _context.FornecedoresPessoaJuridica.Include(s => s.Empresa).Include(s=>s.Telefones).ToList();
 
             if (fornecedoresPF.Count > 0)
-            {
                 viewModels.AddRange((fornecedoresPF.Select(f => new FornecedorViewModel(f, f.Empresa.Nome))));
-            }
+            
 
             if (fornecedoresPJ.Count > 0)
-            {
                 viewModels.AddRange((fornecedoresPJ.Select(f => new FornecedorViewModel(f, f.Empresa.Nome))));
-            }
+            
 
-            return View(viewModels);
+            return viewModels;
         }
 
         public IActionResult Novo()
