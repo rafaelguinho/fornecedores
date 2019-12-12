@@ -8,7 +8,7 @@ Olá, nesse projeto você pode incluir empresas e fornecedores. Para rodar o pro
 Após clonar o repositório, abra a pasta do projeto (fornecedores) no terminal e execute:
 ### `cd fornecedores`
 
-No terminal deve ficar fornecedores\fornecedores\ 
+O projeto está dentro de fornecedores\fornecedores\ 
 
 Logo após execute:
 ### `dotnet run --project mvc`
