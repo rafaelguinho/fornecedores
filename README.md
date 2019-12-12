@@ -5,7 +5,7 @@ Olá, nesse projeto você pode incluir empresas e fornecedores. Para rodar o pro
 
 # Executando o projeto
 
-Após clonar o repositório, abra a pasta do projeto no terminal e execute:
+Após clonar o repositório, abra a pasta do projeto (fornecedores) no terminal e execute:
 ### `cd fornecedores`
 
 Logo após execute:
