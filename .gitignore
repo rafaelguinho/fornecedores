@@ -32,6 +32,9 @@ fornecedores/mvc/[Oo]ut/**
 fornecedores/mvc/msbuild.log
 fornecedores/mvc/msbuild.err
 fornecedores/mvc/msbuild.wrn
+fornecedores/mvc/fornecedores.db
+fornecedores/mvc/fornecedores.db-shm
+fornecedores/mvc/fornecedores.db-wal
 
 
 

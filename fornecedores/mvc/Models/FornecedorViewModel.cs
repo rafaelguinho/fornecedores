@@ -66,7 +66,7 @@ namespace mvc.Models
                 CNPJ = CNPJ,
                 IdEmpresa = IdEmpresa.Value,
                 Nome = Nome,
-                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).ToList()
+                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).Where(t=> !string.IsNullOrEmpty(t.Numero)).ToList()
             };
         }
 
@@ -79,7 +79,7 @@ namespace mvc.Models
                 DataNascimento = DataNascimento.Value,
                 IdEmpresa = IdEmpresa.Value,
                 Nome = Nome,
-                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).ToList()
+                Telefones = Telefones.Select(t => new Telefone { Numero = t.Numero }).Where(t=> !string.IsNullOrEmpty(t.Numero)).ToList()
             };
         }
 
