@@ -48,6 +48,11 @@
 
             <div id="dadosPF" style="display:none">
                 <div class="form-group">
+                    <label asp-for="CPF" class="control-label"></label>
+                    <input asp-for="CPF" class="form-control" />
+                    <span asp-validation-for="CPF" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="RG" class="control-label"></label>
                     <input asp-for="RG" class="form-control" />
                     <span asp-validation-for="RG" class="text-danger"></span>
@@ -132,7 +137,7 @@
 
         $(document).ready(function () {
             
-            mostrarEsconderPf($('input[name$="TipoPessoa"]').val());
+            mostrarEsconderPf($('input[name$="TipoPessoa"]:checked').val());
 
             var itens = $('input[name$="tels"]');
 
@@ -160,6 +165,7 @@
                     $("#dadosPJ").show();
                     $("#dadosPF").hide();
                     $('#RG').val('');
+                    $('#CPF').val('');
                     $('#DataNascimento').val('');
                 }
             }

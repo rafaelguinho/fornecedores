@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using mvc.Models.Pessoas;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace mvc.Models
 {
@@ -10,11 +11,11 @@ namespace mvc.Models
     {
         public FornecedorViewModel()
         {
-            
+
         }
         public FornecedorViewModel(FornecedorPessoaJuridica pj, string nomeEmpresa)
         {
-            CNPJ = pj.CNPJ;
+            CPFCNPJ = pj.CNPJ;
             Nome = pj.Nome;
             NomeEmpresa = nomeEmpresa;
             DataCadastro = pj.DataCadastro;
@@ -23,6 +24,7 @@ namespace mvc.Models
         public FornecedorViewModel(FornecedorPessoaFisica pf, string nomeEmpresa)
         {
             RG = pf.RG;
+            CPFCNPJ = pf.CPF;
             DataNascimento = pf.DataNascimento;
             Nome = pf.Nome;
             NomeEmpresa = nomeEmpresa;
@@ -32,6 +34,7 @@ namespace mvc.Models
         [Display(Name = "Empresa")]
         public string NomeEmpresa { get; set; }
 
+        [Required(ErrorMessage = "Campo obrigatório")]
         public string Nome { get; set; }
 
         public string TipoPessoa { get; set; }
@@ -49,12 +52,12 @@ namespace mvc.Models
 
         public string CNPJ { get; set; }
 
-        public List<TelefoneViewModel> Telefones { get; set; } = new List<TelefoneViewModel>();
+        public string CPF { get; set; }
 
-        public bool EhValido()
-        {
-            return true;
-        }
+        [Display(Name = "CPF/CNPJ")]
+        public string CPFCNPJ { get; set; }
+
+        public List<TelefoneViewModel> Telefones { get; set; } = new List<TelefoneViewModel>();
 
         public FornecedorPessoaJuridica ConverterPessoaJuridica()
         {
@@ -72,6 +75,7 @@ namespace mvc.Models
             return new FornecedorPessoaFisica
             {
                 RG = RG,
+                CPF = CPF,
                 DataNascimento = DataNascimento.Value,
                 IdEmpresa = IdEmpresa.Value,
                 Nome = Nome,
@@ -81,7 +85,8 @@ namespace mvc.Models
 
     }
 
-    public class TelefoneViewModel{
+    public class TelefoneViewModel
+    {
 
         [Display(Name = "Número")]
         public string Numero { get; set; }

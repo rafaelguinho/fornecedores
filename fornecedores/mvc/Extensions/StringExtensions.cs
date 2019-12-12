@@ -2,10 +2,13 @@ namespace mvc.Extensions
 {
     public static class StringExtensions
     {
-        public static string LimparCNPJ(this string CNPJ)
+        public static string LimparCNPJCPF(this string CNPJCPF)
         {
-            if(string.IsNullOrEmpty(CNPJ))return null;
-            return CNPJ.Replace(",", "").Replace("-", "").Replace(".", "").Replace("/", "");
+            CNPJCPF = CNPJCPF.Trim();
+
+            if(string.IsNullOrEmpty(CNPJCPF))return null;
+
+            return CNPJCPF.Replace(",", "").Replace("-", "").Replace(".", "").Replace("/", "");
         }
     }
 }

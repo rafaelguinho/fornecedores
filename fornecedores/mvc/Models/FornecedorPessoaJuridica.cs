@@ -9,12 +9,13 @@ namespace mvc.Models
     {
         public FornecedorPessoaJuridica()
         {
-            TipoPessoa = "Jurídica fornecedor";
+            TipoPessoa = "JurÃ­dica fornecedor";
         }
 
         public int IdEmpresa { get; set; }
 
         public Empresa Empresa { get; set; }
+        
 
     }
 }

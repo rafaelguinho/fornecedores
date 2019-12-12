@@ -9,5 +9,7 @@ namespace mvc.Models.Pessoas
         public DateTime DataNascimento { get; set; }
 
         public string RG { get; set; }
+
+        public string CPF { get; set; }
     }
 }

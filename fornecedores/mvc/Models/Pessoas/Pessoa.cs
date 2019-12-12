@@ -8,6 +8,7 @@ namespace mvc.Models.Pessoas
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Campo obrigatório")]
         public string Nome { get; set; }
 
         public DateTime DataCadastro { get; set; } = DateTime.Now;

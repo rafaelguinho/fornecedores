@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using mvc.Extensions;
 using Microsoft.EntityFrameworkCore;
+using mvc.Validacao;
 
 namespace mvc.Controllers
 {
@@ -49,9 +50,13 @@ namespace mvc.Controllers
         public IActionResult Novo(Empresa empresa)
         {
             PreencherUfs();
-            if (!ModelState.IsValid) return View(empresa);
 
-            empresa.CNPJ = empresa.CNPJ?.LimparCNPJ();
+             empresa.CNPJ = empresa.CNPJ?.LimparCNPJCPF();
+
+            if (!ValidaCNPJ.EhCnpjValido(empresa.CNPJ))
+                ModelState.AddModelError("CNPJ", $"CNPJ inválido");
+
+            if (!ModelState.IsValid) return View(empresa);
 
             if (_context.Empresas.Any(e => e.CNPJ == empresa.CNPJ))
             {
@@ -62,7 +67,7 @@ namespace mvc.Controllers
             _context.Empresas.Add(empresa);
             _context.SaveChanges();
 
-            return View(empresa);
+            return RedirectToAction("Index");
         }
 
         public void PreencherUfs()
