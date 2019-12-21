@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using mvc.Context;
+using Repository;
+using  Repository.BuscaStrategies;
+using  Repository.BuscaStrategies.FornecedorFilters;
 
 namespace mvc
 {
@@ -26,6 +29,9 @@ namespace mvc
         {
             services.AddControllersWithViews();
             services.AddDbContext<FornecedoresContext>();
+
+            services.AddScoped<IFornecedoresRepository, FornecedoresRepository>();
+            services.AddScoped<IFornecedoresBuscaStrategy, BuscarNome>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

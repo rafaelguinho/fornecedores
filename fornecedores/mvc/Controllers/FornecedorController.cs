@@ -8,57 +8,55 @@ using System;
 using mvc.Extensions;
 using Microsoft.EntityFrameworkCore;
 using mvc.Validacao;
+using Repository;
 
 namespace mvc.Controllers
 {
     public class FornecedorController : Controller
     {
+        private readonly IFornecedoresRepository _repository;
         private readonly FornecedoresContext _context;
 
-        public FornecedorController(FornecedoresContext context)
+        public FornecedorController(IFornecedoresRepository repository, FornecedoresContext context)
         {
+            _repository = repository;
             _context = context;
         }
 
         public IActionResult Index()
         {
+            var fornecedores = _repository.Buscar();
+
+           var viewModels = ConverterFornecedoresParaViewModel(fornecedores.fornecedoresPF,
+            fornecedores.fornecedoresPJ);
+
             var busca = new BuscarFornecedoresViewModel
             {
-                Fornecedores = ObterFornecedores()
+                Fornecedores = viewModels
             };
 
             return View(busca);
         }
 
-        public IActionResult Buscar(BuscarFornecedoresViewModel viewModel)
+        public IActionResult Buscar([FromQuery] BuscarFornecedoresViewModel buscaViewModel)
         {
-            var fornecedores = ObterFornecedores();
+            var fornecedores = _repository.Buscar(buscaViewModel);
 
-            fornecedores  = string.IsNullOrEmpty(viewModel.Nome)? fornecedores: fornecedores.Where(f=>f.Nome.ToLower().Contains(viewModel.Nome.ToLower())).ToList();
+            var fornecedorViewModels = ConverterFornecedoresParaViewModel(fornecedores.fornecedoresPF,
+            fornecedores.fornecedoresPJ);
 
-            fornecedores = (!viewModel.DataCadastro.HasValue)? fornecedores : fornecedores.Where(f=>f.DataCadastro.Date == viewModel.DataCadastro.Value.Date).ToList();
+            buscaViewModel.Fornecedores = fornecedorViewModels;
 
-            fornecedores = string.IsNullOrEmpty(viewModel.CPFCNPJ)? fornecedores : fornecedores.Where(f=>f.CPFCNPJ == viewModel.CPFCNPJ.LimparCNPJCPF()).ToList();
-
-            viewModel.Fornecedores = fornecedores;
-
-            return View("Index", viewModel);
+            
+            return View("Index", buscaViewModel);
         }
 
-        private List<FornecedorViewModel> ObterFornecedores()
+        private List<FornecedorViewModel> ConverterFornecedoresParaViewModel(IQueryable<FornecedorPessoaFisica> fornecedoresPF, 
+        IQueryable<FornecedorPessoaJuridica> fornecedoresPJ)
         {
-            List<FornecedorViewModel> viewModels = new List<FornecedorViewModel>();
-
-            var fornecedoresPF = _context.FornecedoresPessoaFisica.Include(s => s.Empresa).Include(s=>s.Telefones).ToList();
-            var fornecedoresPJ = _context.FornecedoresPessoaJuridica.Include(s => s.Empresa).Include(s=>s.Telefones).ToList();
-
-            if (fornecedoresPF.Count > 0)
-                viewModels.AddRange((fornecedoresPF.Select(f => new FornecedorViewModel(f, f.Empresa.Nome))));
-            
-
-            if (fornecedoresPJ.Count > 0)
-                viewModels.AddRange((fornecedoresPJ.Select(f => new FornecedorViewModel(f, f.Empresa.Nome))));
-            
+            var viewModels = new List<FornecedorViewModel>();
+            viewModels.AddRange(fornecedoresPF.ToList().Select(f=>new FornecedorViewModel(f, f.Empresa.Nome)));
+            viewModels.AddRange(fornecedoresPJ.ToList().Select(f=>new FornecedorViewModel(f, f.Empresa.Nome)));
 
             return viewModels;
         }
