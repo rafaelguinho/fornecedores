@@ -21,10 +21,10 @@ namespace Repository
 
         public (IQueryable<FornecedorPessoaFisica> fornecedoresPF, IQueryable<FornecedorPessoaJuridica> fornecedoresPJ) Buscar(BuscarFornecedoresViewModel busca = null)
         {
-            var queryPF = _context.FornecedoresPessoaFisica.Include(f=>f.Empresa).AsNoTracking();
-            var queryPJ = _context.FornecedoresPessoaJuridica.Include(f=>f.Empresa).AsNoTracking();
+            var queryPF = _context.FornecedoresPessoaFisica.Include(f => f.Empresa).AsNoTracking();
+            var queryPJ = _context.FornecedoresPessoaJuridica.Include(f => f.Empresa).AsNoTracking();
 
-            if(busca == null) return (queryPF, queryPJ);
+            if (busca == null) return (queryPF, queryPJ);
 
             foreach (var strategy in _strategies)
             {
@@ -36,6 +36,21 @@ namespace Repository
 
             return (queryPF, queryPJ);
 
+        }
+
+        public FornecedorPessoaFisica Salvar(FornecedorPessoaFisica pf)
+        {
+            _context.FornecedoresPessoaFisica.Add(pf);
+            _context.SaveChanges();
+
+             return pf;
+        }
+        public FornecedorPessoaJuridica Salvar(FornecedorPessoaJuridica pj)
+        {
+            _context.FornecedoresPessoaJuridica.Add(pj);
+            _context.SaveChanges();
+
+            return pj;
         }
     }
 }

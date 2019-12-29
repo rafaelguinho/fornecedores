@@ -7,6 +7,7 @@ using System.Linq;
 using mvc.Extensions;
 using Microsoft.EntityFrameworkCore;
 using mvc.Validacao;
+using static mvc.Helpers.FornecedorHelper;
 
 namespace mvc.Controllers
 {
@@ -56,13 +57,10 @@ namespace mvc.Controllers
             if (!ValidaCNPJ.EhCnpjValido(empresa.CNPJ))
                 ModelState.AddModelError("CNPJ", $"CNPJ inválido");
 
-            if (!ModelState.IsValid) return View(empresa);
-
             if (_context.Empresas.Any(e => e.CNPJ == empresa.CNPJ))
-            {
                 ModelState.AddModelError("CNPJ", $"Empresa com o CNPJ {empresa.CNPJ} já cadastrada");
-                return View(empresa);
-            }
+
+             if (!ModelState.IsValid) return View(empresa);
 
             _context.Empresas.Add(empresa);
             _context.SaveChanges();
@@ -73,33 +71,33 @@ namespace mvc.Controllers
         public void PreencherUfs()
         {
             ViewBag.UFS = new List<SelectListItem>{
-             new SelectListItem {Text = "AC", Value = "AC"},
-             new SelectListItem {Text = "AL", Value = "AL"},
-            new SelectListItem {Text = "AP", Value = "AP"},
-            new SelectListItem {Text = "AM", Value = "AM"},
-            new SelectListItem {Text = "BA", Value = "BA"},
-            new SelectListItem {Text = "CE", Value = "CE"},
-            new SelectListItem {Text = "DF", Value = "DF"},
-            new SelectListItem {Text = "ES", Value = "ES"},
-            new SelectListItem {Text = "GO", Value = "GO"},
-            new SelectListItem {Text = "MA", Value = "MA"},
-            new SelectListItem {Text = "MT", Value = "MT"},
-            new SelectListItem {Text = "MS", Value = "MS"},
-            new SelectListItem {Text = "MG", Value = "MG"},
-            new SelectListItem {Text = "PA", Value = "PA"},
-            new SelectListItem {Text = "PB", Value = "PB"},
-            new SelectListItem {Text = "PR", Value = "PR"},
-            new SelectListItem {Text = "PE", Value = "PE"},
-            new SelectListItem {Text = "PI", Value = "PI"},
-            new SelectListItem {Text = "RJ", Value = "RJ"},
-            new SelectListItem {Text = "RN", Value = "RN"},
-            new SelectListItem {Text = "RS", Value = "RS"},
-            new SelectListItem {Text = "RO", Value = "RO"},
-            new SelectListItem {Text = "RR", Value = "RR"},
-            new SelectListItem {Text = "SC", Value = "SC"},
-            new SelectListItem {Text = "SP", Value = "SP"},
-            new SelectListItem {Text = "SE", Value = "SE"},
-            new SelectListItem {Text = "TO", Value = "TO"}};
+                new SelectListItem {Text = "AC", Value = "AC"},
+                new SelectListItem {Text = "AL", Value = "AL"},
+                new SelectListItem {Text = "AP", Value = "AP"},
+                new SelectListItem {Text = "AM", Value = "AM"},
+                new SelectListItem {Text = "BA", Value = "BA"},
+                new SelectListItem {Text = "CE", Value = "CE"},
+                new SelectListItem {Text = "DF", Value = "DF"},
+                new SelectListItem {Text = "ES", Value = "ES"},
+                new SelectListItem {Text = "GO", Value = "GO"},
+                new SelectListItem {Text = "MA", Value = "MA"},
+                new SelectListItem {Text = "MT", Value = "MT"},
+                new SelectListItem {Text = "MS", Value = "MS"},
+                new SelectListItem {Text = "MG", Value = "MG"},
+                new SelectListItem {Text = "PA", Value = "PA"},
+                new SelectListItem {Text = "PB", Value = "PB"},
+                new SelectListItem {Text = "PR", Value = "PR"},
+                new SelectListItem {Text = "PE", Value = "PE"},
+                new SelectListItem {Text = "PI", Value = "PI"},
+                new SelectListItem {Text = "RJ", Value = "RJ"},
+                new SelectListItem {Text = "RN", Value = "RN"},
+                new SelectListItem {Text = "RS", Value = "RS"},
+                new SelectListItem {Text = "RO", Value = "RO"},
+                new SelectListItem {Text = "RR", Value = "RR"},
+                new SelectListItem {Text = "SC", Value = "SC"},
+                new SelectListItem {Text = "SP", Value = "SP"},
+                new SelectListItem {Text = "SE", Value = "SE"},
+                new SelectListItem {Text = "TO", Value = "TO"}};
         }
     }
 }

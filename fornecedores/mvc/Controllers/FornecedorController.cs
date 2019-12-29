@@ -9,6 +9,7 @@ using mvc.Extensions;
 using Microsoft.EntityFrameworkCore;
 using mvc.Validacao;
 using Repository;
+using static mvc.Helpers.FornecedorHelper;
 
 namespace mvc.Controllers
 {
@@ -51,16 +52,6 @@ namespace mvc.Controllers
             return View("Index", buscaViewModel);
         }
 
-        private List<FornecedorViewModel> ConverterFornecedoresParaViewModel(IQueryable<FornecedorPessoaFisica> fornecedoresPF, 
-        IQueryable<FornecedorPessoaJuridica> fornecedoresPJ)
-        {
-            var viewModels = new List<FornecedorViewModel>();
-            viewModels.AddRange(fornecedoresPF.ToList().Select(f=>new FornecedorViewModel(f, f.Empresa.Nome)));
-            viewModels.AddRange(fornecedoresPJ.ToList().Select(f=>new FornecedorViewModel(f, f.Empresa.Nome)));
-
-            return viewModels;
-        }
-
         public IActionResult Novo()
         {
             PreencherEmpresas();
@@ -92,15 +83,13 @@ namespace mvc.Controllers
             if (viewModel.TipoPessoa == "PJ")
             {
                 var pj = viewModel.ConverterPessoaJuridica();
-                _context.FornecedoresPessoaJuridica.Add(pj);
+                _repository.Salvar(pj);
             }
             else if (viewModel.TipoPessoa == "PF")
             {
                 var pf = viewModel.ConverterPessoaFisica();
-                _context.FornecedoresPessoaFisica.Add(pf);
+                _repository.Salvar(pf);
             }
-
-            _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
