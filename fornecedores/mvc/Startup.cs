@@ -52,8 +52,11 @@ namespace mvc
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
 
             app.UseRouting();
+            app.UseAuthentication();
+
 
             app.UseAuthorization();
 
@@ -62,6 +65,7 @@ namespace mvc
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapRazorPages();
             });
 
             serviceProvider.GetService<FornecedoresContext>().Database.EnsureCreated();
