@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace mvc.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,14 +13,16 @@ namespace mvc.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(nullable: false),
                     DataCadastro = table.Column<DateTime>(nullable: false),
                     TipoPessoa = table.Column<string>(nullable: false),
-                    IdEmpresa = table.Column<int>(nullable: true),
                     DataNascimento = table.Column<DateTime>(nullable: true),
                     RG = table.Column<string>(nullable: true),
+                    CPF = table.Column<string>(nullable: true),
+                    IdEmpresa = table.Column<int>(nullable: true),
                     CNPJ = table.Column<string>(nullable: true),
-                    UF = table.Column<string>(nullable: true)
+                    UF = table.Column<string>(nullable: true),
+                    FornecedorPessoaJuridica_IdEmpresa = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,6 +30,12 @@ namespace mvc.Migrations
                     table.ForeignKey(
                         name: "FK_Pessoas_Pessoas_IdEmpresa",
                         column: x => x.IdEmpresa,
+                        principalTable: "Pessoas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Pessoas_Pessoas_FornecedorPessoaJuridica_IdEmpresa",
+                        column: x => x.FornecedorPessoaJuridica_IdEmpresa,
                         principalTable: "Pessoas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -39,7 +47,6 @@ namespace mvc.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DDD = table.Column<string>(nullable: true),
                     Numero = table.Column<string>(nullable: true),
                     PessoaId = table.Column<int>(nullable: true)
                 },
@@ -60,10 +67,9 @@ namespace mvc.Migrations
                 column: "IdEmpresa");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pessoas_CNPJ",
+                name: "IX_Pessoas_FornecedorPessoaJuridica_IdEmpresa",
                 table: "Pessoas",
-                column: "CNPJ",
-                unique: true);
+                column: "FornecedorPessoaJuridica_IdEmpresa");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Telefone_PessoaId",

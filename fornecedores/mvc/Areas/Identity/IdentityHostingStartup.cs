@@ -14,13 +14,45 @@ namespace mvc.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
+            builder.ConfigureServices((context, services) =>
+            {
                 services.AddDbContext<IdentityDbContext>(options =>
                     options.UseSqlite("Data Source=fornecedores.db"));
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddErrorDescriber<IdentityErrorDescriberPtBr>()
                     .AddEntityFrameworkStores<IdentityDbContext>();
             });
+        }
+
+        internal class IdentityErrorDescriberPtBr : IdentityErrorDescriber
+        {
+            public override IdentityError PasswordRequiresNonAlphanumeric()
+            {
+                return new IdentityError
+                {
+                    Code = nameof(PasswordRequiresNonAlphanumeric),
+                    Description = "A senha deve ter pelo menos um caractere numérico"
+                };
+            }
+
+            public override IdentityError PasswordRequiresLower()
+            {
+                return new IdentityError
+                {
+                    Code = nameof(PasswordRequiresLower),
+                    Description = "A senha deve ter pelo menos uma letra minúscula"
+                };
+            }
+
+            public override IdentityError PasswordRequiresUpper()
+            {
+                return new IdentityError
+                {
+                    Code = nameof(PasswordRequiresUpper),
+                    Description = "A senha deve ter pelo menos uma letra maiúscula"
+                };
+            }
         }
     }
 }

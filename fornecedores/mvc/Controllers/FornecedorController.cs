@@ -10,9 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using mvc.Validacao;
 using Repository;
 using static mvc.Helpers.FornecedorHelper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace mvc.Controllers
 {
+    [Authorize]
     public class FornecedorController : Controller
     {
         private readonly IFornecedoresRepository _repository;

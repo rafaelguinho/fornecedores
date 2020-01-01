@@ -8,9 +8,11 @@ using mvc.Extensions;
 using Microsoft.EntityFrameworkCore;
 using mvc.Validacao;
 using static mvc.Helpers.FornecedorHelper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace mvc.Controllers
 {
+    [Authorize]
     public class EmpresaController : Controller
     {
         private readonly FornecedoresContext _context;

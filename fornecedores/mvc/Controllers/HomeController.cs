@@ -9,9 +9,11 @@ using Microsoft.Extensions.Logging;
 using mvc.Models;
 using mvc.Models.Pessoas;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace mvc.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()

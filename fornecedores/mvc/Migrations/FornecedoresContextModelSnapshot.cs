@@ -26,6 +26,7 @@ namespace mvc.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TipoPessoa")
@@ -45,9 +46,6 @@ namespace mvc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("DDD")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Numero")
                         .HasColumnType("TEXT");
 
@@ -61,21 +59,12 @@ namespace mvc.Migrations
                     b.ToTable("Telefone");
                 });
 
-            modelBuilder.Entity("mvc.Models.Fornecedor", b =>
-                {
-                    b.HasBaseType("mvc.Models.Pessoas.Pessoa");
-
-                    b.Property<int>("IdEmpresa")
-                        .HasColumnType("INTEGER");
-
-                    b.HasIndex("IdEmpresa");
-
-                    b.HasDiscriminator().HasValue("Fornecedor");
-                });
-
             modelBuilder.Entity("mvc.Models.Pessoas.PessoaFisica", b =>
                 {
                     b.HasBaseType("mvc.Models.Pessoas.Pessoa");
+
+                    b.Property<string>("CPF")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("TEXT");
@@ -94,10 +83,19 @@ namespace mvc.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasIndex("CNPJ")
-                        .IsUnique();
-
                     b.HasDiscriminator().HasValue("Jurídica");
+                });
+
+            modelBuilder.Entity("mvc.Models.FornecedorPessoaFisica", b =>
+                {
+                    b.HasBaseType("mvc.Models.Pessoas.PessoaFisica");
+
+                    b.Property<int>("IdEmpresa")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("IdEmpresa");
+
+                    b.HasDiscriminator().HasValue("Física fornecedor");
                 });
 
             modelBuilder.Entity("mvc.Models.Empresa", b =>
@@ -108,7 +106,20 @@ namespace mvc.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasDiscriminator().HasValue("Empresa");
+                    b.HasDiscriminator().HasValue("Jurídica empresa");
+                });
+
+            modelBuilder.Entity("mvc.Models.FornecedorPessoaJuridica", b =>
+                {
+                    b.HasBaseType("mvc.Models.Pessoas.PessoaJuridica");
+
+                    b.Property<int>("IdEmpresa")
+                        .HasColumnName("FornecedorPessoaJuridica_IdEmpresa")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("IdEmpresa");
+
+                    b.HasDiscriminator().HasValue("Jurídica fornecedor");
                 });
 
             modelBuilder.Entity("mvc.Models.Telefone", b =>
@@ -118,10 +129,19 @@ namespace mvc.Migrations
                         .HasForeignKey("PessoaId");
                 });
 
-            modelBuilder.Entity("mvc.Models.Fornecedor", b =>
+            modelBuilder.Entity("mvc.Models.FornecedorPessoaFisica", b =>
                 {
                     b.HasOne("mvc.Models.Empresa", "Empresa")
-                        .WithMany("Fornecedores")
+                        .WithMany("FornecedoresPessoaFisica")
+                        .HasForeignKey("IdEmpresa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("mvc.Models.FornecedorPessoaJuridica", b =>
+                {
+                    b.HasOne("mvc.Models.Empresa", "Empresa")
+                        .WithMany("FornecedoresPessoaJuridica")
                         .HasForeignKey("IdEmpresa")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
