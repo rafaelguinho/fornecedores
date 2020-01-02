@@ -1,4 +1,5 @@
-@inject SignInManager<IdentityUser> SignInManager
+@using mvc.Areas.Identity
+@inject SignInManager<AppIdentityUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

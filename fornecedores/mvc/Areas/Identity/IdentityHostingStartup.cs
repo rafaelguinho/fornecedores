@@ -19,9 +19,9 @@ namespace mvc.Areas.Identity
                 services.AddDbContext<IdentityDbContext>(options =>
                     options.UseSqlite("Data Source=fornecedores.db"));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<AppIdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddErrorDescriber<IdentityErrorDescriberPtBr>()
-                    .AddEntityFrameworkStores<IdentityDbContext>();
+                .AddEntityFrameworkStores<IdentityDbContext>();
             });
         }
 

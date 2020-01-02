@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using mvc.Areas.Identity;
 
 namespace mvc.Context
 {
-    public class IdentityDbContext : IdentityDbContext<IdentityUser>
+    public class IdentityDbContext : IdentityDbContext<AppIdentityUser>
     {
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
             : base(options)

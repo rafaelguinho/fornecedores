@@ -12,6 +12,7 @@ using mvc.Context;
 using Repository;
 using  Repository.BuscaStrategies;
 using  Repository.BuscaStrategies.FornecedorFilters;
+using Microsoft.EntityFrameworkCore;
 
 namespace mvc
 {
@@ -68,7 +69,8 @@ namespace mvc
                     endpoints.MapRazorPages();
             });
 
-            serviceProvider.GetService<FornecedoresContext>().Database.EnsureCreated();
+            serviceProvider.GetService<FornecedoresContext>().Database.Migrate();
+            serviceProvider.GetService<IdentityDbContext>().Database.Migrate();
         }
     }
 }
