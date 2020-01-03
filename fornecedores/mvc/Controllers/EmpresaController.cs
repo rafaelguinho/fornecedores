@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using mvc.Validacao;
 using static mvc.Helpers.FornecedorHelper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using mvc.Areas.Identity;
 
 namespace mvc.Controllers
 {
@@ -16,10 +18,13 @@ namespace mvc.Controllers
     public class EmpresaController : Controller
     {
         private readonly FornecedoresContext _context;
+        private readonly UserManager<AppIdentityUser> _userManager;
 
-        public EmpresaController(FornecedoresContext context)
+        public EmpresaController(FornecedoresContext context,
+            UserManager<AppIdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -63,6 +68,9 @@ namespace mvc.Controllers
                 ModelState.AddModelError("CNPJ", $"Empresa com o CNPJ {empresa.CNPJ} já cadastrada");
 
              if (!ModelState.IsValid) return View(empresa);
+
+            var idUsuario = _userManager.GetUserId(HttpContext.User);
+            empresa.IdUsuario = idUsuario;
 
             _context.Empresas.Add(empresa);
             _context.SaveChanges();

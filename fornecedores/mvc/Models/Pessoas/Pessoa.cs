@@ -16,5 +16,7 @@ namespace mvc.Models.Pessoas
         public ICollection<Telefone> Telefones { get; set; }
 
         public string TipoPessoa { get; set; }
+
+        public string IdUsuario { get; set; }
     }
 }

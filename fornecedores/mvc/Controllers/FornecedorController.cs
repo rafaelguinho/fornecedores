@@ -11,6 +11,8 @@ using mvc.Validacao;
 using Repository;
 using static mvc.Helpers.FornecedorHelper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using mvc.Areas.Identity;
 
 namespace mvc.Controllers
 {
@@ -19,11 +21,15 @@ namespace mvc.Controllers
     {
         private readonly IFornecedoresRepository _repository;
         private readonly FornecedoresContext _context;
+        private readonly UserManager<AppIdentityUser> _userManager;
 
-        public FornecedorController(IFornecedoresRepository repository, FornecedoresContext context)
+        public FornecedorController(IFornecedoresRepository repository, 
+            FornecedoresContext context, 
+            UserManager<AppIdentityUser> userManager)
         {
             _repository = repository;
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -82,14 +88,18 @@ namespace mvc.Controllers
                 return View(viewModel);
             }
 
+            var idUsuario = _userManager.GetUserId(HttpContext.User);
+            
             if (viewModel.TipoPessoa == "PJ")
             {
                 var pj = viewModel.ConverterPessoaJuridica();
+                pj.IdUsuario = idUsuario;
                 _repository.Salvar(pj);
             }
             else if (viewModel.TipoPessoa == "PF")
             {
                 var pf = viewModel.ConverterPessoaFisica();
+                pf.IdUsuario = idUsuario;
                 _repository.Salvar(pf);
             }
 
