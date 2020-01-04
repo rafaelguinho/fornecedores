@@ -35,6 +35,15 @@ namespace mvc
             services.AddScoped<IFornecedoresBuscaStrategy, BuscarNome>();
             services.AddScoped<IFornecedoresBuscaStrategy, BuscarData>();
             services.AddScoped<IFornecedoresBuscaStrategy, BuscarCPFCNPJ>();
+
+            services.AddAuthentication().AddGoogle(options =>
+        {
+            IConfigurationSection googleAuthNSection =
+                Configuration.GetSection("ExternalLogin:Google");
+
+            options.ClientId = googleAuthNSection["ClientId"];
+            options.ClientSecret = googleAuthNSection["ClientSecret"];
+        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +77,7 @@ namespace mvc
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                     endpoints.MapRazorPages();
             });
+
 
             serviceProvider.GetService<FornecedoresContext>().Database.Migrate();
             serviceProvider.GetService<IdentityDbContext>().Database.Migrate();
