@@ -29,19 +29,23 @@ namespace mvc.Controllers
 
         public IActionResult Index()
         {
-            return View(_context.Empresas.ToList());
+            var idUsuario = _userManager.GetUserId(HttpContext.User);
+            return View(_context.Empresas.Where(e => e.IdUsuario == idUsuario).ToList());
         }
 
         public IActionResult VerFornecedores(int id)
         {
+            var idUsuario = _userManager.GetUserId(HttpContext.User);
             var empresa = _context.Empresas.Include(s => s.FornecedoresPessoaFisica)
-            .Include(s => s.FornecedoresPessoaJuridica)
-            .First(e=> e.Id == id);
+                            .Include(s => s.FornecedoresPessoaJuridica)
+                        .SingleOrDefault(e => e.Id == id && e.IdUsuario == idUsuario);
+
+            if (empresa == null) return NotFound();
 
             List<FornecedorViewModel> viewModels = new List<FornecedorViewModel>();
 
-            var fornecedoresPF = empresa.FornecedoresPessoaFisica.Select(f=> new FornecedorViewModel(f, empresa.Nome)).ToList();
-            var fornecedoresPJ = empresa.FornecedoresPessoaJuridica.Select(f=> new FornecedorViewModel(f, empresa.Nome)).ToList();
+            var fornecedoresPF = empresa.FornecedoresPessoaFisica.Select(f => new FornecedorViewModel(f, empresa.Nome)).ToList();
+            var fornecedoresPJ = empresa.FornecedoresPessoaJuridica.Select(f => new FornecedorViewModel(f, empresa.Nome)).ToList();
 
             viewModels.AddRange(fornecedoresPF);
             viewModels.AddRange(fornecedoresPJ);
@@ -59,17 +63,18 @@ namespace mvc.Controllers
         {
             PreencherUfs();
 
-             empresa.CNPJ = empresa.CNPJ?.LimparCNPJCPF();
+            empresa.CNPJ = empresa.CNPJ?.LimparCNPJCPF();
 
             if (!ValidaCNPJ.EhCnpjValido(empresa.CNPJ))
                 ModelState.AddModelError("CNPJ", $"CNPJ inválido");
 
-            if (_context.Empresas.Any(e => e.CNPJ == empresa.CNPJ))
+            var idUsuario = _userManager.GetUserId(HttpContext.User);
+
+            if (_context.Empresas.Any(e => e.CNPJ == empresa.CNPJ && e.IdUsuario == idUsuario))
                 ModelState.AddModelError("CNPJ", $"Empresa com o CNPJ {empresa.CNPJ} já cadastrada");
 
-             if (!ModelState.IsValid) return View(empresa);
-
-            var idUsuario = _userManager.GetUserId(HttpContext.User);
+            if (!ModelState.IsValid) return View(empresa);
+           
             empresa.IdUsuario = idUsuario;
 
             _context.Empresas.Add(empresa);

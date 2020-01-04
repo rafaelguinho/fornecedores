@@ -19,10 +19,10 @@ namespace Repository
             _strategies = strategies;
         }
 
-        public (IQueryable<FornecedorPessoaFisica> fornecedoresPF, IQueryable<FornecedorPessoaJuridica> fornecedoresPJ) Buscar(BuscarFornecedoresViewModel busca = null)
+        public (IQueryable<FornecedorPessoaFisica> fornecedoresPF, IQueryable<FornecedorPessoaJuridica> fornecedoresPJ) Buscar(string idUsuario, BuscarFornecedoresViewModel busca = null)
         {
-            var queryPF = _context.FornecedoresPessoaFisica.Include(f => f.Empresa).AsNoTracking();
-            var queryPJ = _context.FornecedoresPessoaJuridica.Include(f => f.Empresa).AsNoTracking();
+            var queryPF = _context.FornecedoresPessoaFisica.Where(f=>f.IdUsuario == idUsuario).Include(f => f.Empresa).AsNoTracking();
+            var queryPJ = _context.FornecedoresPessoaJuridica.Where(f => f.IdUsuario == idUsuario).Include(f => f.Empresa).AsNoTracking();
 
             if (busca == null) return (queryPF, queryPJ);
 

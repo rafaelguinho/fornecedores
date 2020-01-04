@@ -34,7 +34,8 @@ namespace mvc.Controllers
 
         public IActionResult Index()
         {
-            var fornecedores = _repository.Buscar();
+            var idUsuario = _userManager.GetUserId(HttpContext.User);
+            var fornecedores = _repository.Buscar(idUsuario);
 
            var viewModels = ConverterFornecedoresParaViewModel(fornecedores.fornecedoresPF,
             fornecedores.fornecedoresPJ);
@@ -49,7 +50,8 @@ namespace mvc.Controllers
 
         public IActionResult Buscar([FromQuery] BuscarFornecedoresViewModel buscaViewModel)
         {
-            var fornecedores = _repository.Buscar(buscaViewModel);
+            var idUsuario = _userManager.GetUserId(HttpContext.User);
+            var fornecedores = _repository.Buscar(idUsuario, buscaViewModel);
 
             var fornecedorViewModels = ConverterFornecedoresParaViewModel(fornecedores.fornecedoresPF,
             fornecedores.fornecedoresPJ);
