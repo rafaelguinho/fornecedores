@@ -174,7 +174,7 @@ namespace mvc.Controllers
                 ModelState.AddModelError("DataNascimento", $"Para empresas do Paraná o fornecedor não pode ser menor de idade");
         }
 
-        public int CalculaIdade(DateTime dataNascimento)
+        private int CalculaIdade(DateTime dataNascimento)
         {
             int anos = DateTime.Now.Year - dataNascimento.Year;
 
