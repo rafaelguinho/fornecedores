@@ -21,7 +21,7 @@ namespace Repository
 
         public (IQueryable<FornecedorPessoaFisica> fornecedoresPF, IQueryable<FornecedorPessoaJuridica> fornecedoresPJ) Buscar(string idUsuario, BuscarFornecedoresViewModel busca = null)
         {
-            var queryPF = _context.FornecedoresPessoaFisica.Where(f=>f.IdUsuario == idUsuario).Include(f => f.Empresa).AsNoTracking();
+            var queryPF = _context.FornecedoresPessoaFisica.Where(f => f.IdUsuario == idUsuario).Include(f => f.Empresa).AsNoTracking();
             var queryPJ = _context.FornecedoresPessoaJuridica.Where(f => f.IdUsuario == idUsuario).Include(f => f.Empresa).AsNoTracking();
 
             if (busca == null) return (queryPF, queryPJ);
@@ -43,7 +43,7 @@ namespace Repository
             _context.FornecedoresPessoaFisica.Add(pf);
             _context.SaveChanges();
 
-             return pf;
+            return pf;
         }
         public FornecedorPessoaJuridica Salvar(FornecedorPessoaJuridica pj)
         {

@@ -13,6 +13,8 @@ using Repository;
 using  Repository.BuscaStrategies;
 using  Repository.BuscaStrategies.FornecedorFilters;
 using Microsoft.EntityFrameworkCore;
+using mvc.Repositories;
+using mvc.Services;
 
 namespace mvc
 {
@@ -35,6 +37,8 @@ namespace mvc
             services.AddScoped<IFornecedoresBuscaStrategy, BuscarNome>();
             services.AddScoped<IFornecedoresBuscaStrategy, BuscarData>();
             services.AddScoped<IFornecedoresBuscaStrategy, BuscarCPFCNPJ>();
+            services.AddScoped<IEmpresaService, EmpresaService>();
+            services.AddScoped<IEmpresaRepository, EmpresaRepository>();
 
             services.AddAuthentication().AddGoogle(options =>
         {

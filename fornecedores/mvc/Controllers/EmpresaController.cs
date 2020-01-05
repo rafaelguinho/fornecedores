@@ -1,54 +1,34 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using mvc.Context;
 using mvc.Models;
 using System.Collections.Generic;
-using System.Linq;
-using mvc.Extensions;
-using Microsoft.EntityFrameworkCore;
-using mvc.Validacao;
 using static mvc.Helpers.FornecedorHelper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using mvc.Areas.Identity;
+using mvc.Services;
 
 namespace mvc.Controllers
 {
     [Authorize]
     public class EmpresaController : Controller
     {
-        private readonly FornecedoresContext _context;
-        private readonly UserManager<AppIdentityUser> _userManager;
+        private readonly IEmpresaService _empresaService;
 
-        public EmpresaController(FornecedoresContext context,
-            UserManager<AppIdentityUser> userManager)
+        public EmpresaController(IEmpresaService empresaService)
         {
-            _context = context;
-            _userManager = userManager;
+            _empresaService = empresaService;
         }
 
         public IActionResult Index()
         {
-            var idUsuario = _userManager.GetUserId(HttpContext.User);
-            return View(_context.Empresas.Where(e => e.IdUsuario == idUsuario).ToList());
+            return View(_empresaService.Listar());
         }
 
         public IActionResult VerFornecedores(int id)
         {
-            var idUsuario = _userManager.GetUserId(HttpContext.User);
-            var empresa = _context.Empresas.Include(s => s.FornecedoresPessoaFisica)
-                            .Include(s => s.FornecedoresPessoaJuridica)
-                        .SingleOrDefault(e => e.Id == id && e.IdUsuario == idUsuario);
+            var fornecedores = _empresaService.ListarFornecedoresEmpresa(id);
 
-            if (empresa == null) return NotFound();
-
-            List<FornecedorViewModel> viewModels = new List<FornecedorViewModel>();
-
-            var fornecedoresPF = empresa.FornecedoresPessoaFisica.Select(f => new FornecedorViewModel(f, empresa.Nome)).ToList();
-            var fornecedoresPJ = empresa.FornecedoresPessoaJuridica.Select(f => new FornecedorViewModel(f, empresa.Nome)).ToList();
-
-            viewModels.AddRange(fornecedoresPF);
-            viewModels.AddRange(fornecedoresPJ);
+            var viewModels = ConverterFornecedoresParaViewModel(fornecedores.fornecedoresPF,
+           fornecedores.fornecedoresPJ);
 
             return View(viewModels);
         }
@@ -61,24 +41,19 @@ namespace mvc.Controllers
         [HttpPost]
         public IActionResult Novo(Empresa empresa)
         {
-            PreencherUfs();
+            var resultado = _empresaService.Salvar(empresa);
 
-            empresa.CNPJ = empresa.CNPJ?.LimparCNPJCPF();
+            if (!resultado.Sucesso)
+            {
+                foreach(var erro in resultado.Erros)
+                {
+                    ModelState.AddModelError(erro.Codigo, erro.Descricao);
+                }
 
-            if (!ValidaCNPJ.EhCnpjValido(empresa.CNPJ))
-                ModelState.AddModelError("CNPJ", $"CNPJ inválido");
+                PreencherUfs();
 
-            var idUsuario = _userManager.GetUserId(HttpContext.User);
-
-            if (_context.Empresas.Any(e => e.CNPJ == empresa.CNPJ && e.IdUsuario == idUsuario))
-                ModelState.AddModelError("CNPJ", $"Empresa com o CNPJ {empresa.CNPJ} já cadastrada");
-
-            if (!ModelState.IsValid) return View(empresa);
-           
-            empresa.IdUsuario = idUsuario;
-
-            _context.Empresas.Add(empresa);
-            _context.SaveChanges();
+                return View(empresa);
+            }
 
             return RedirectToAction("Index");
         }
