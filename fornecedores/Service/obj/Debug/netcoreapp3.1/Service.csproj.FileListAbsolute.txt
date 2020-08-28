@@ -1,0 +1,12 @@
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\bin\Debug\netcoreapp3.1\Service.deps.json
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\bin\Debug\netcoreapp3.1\Service.dll
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\bin\Debug\netcoreapp3.1\Service.pdb
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\bin\Debug\netcoreapp3.1\Domain.dll
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\bin\Debug\netcoreapp3.1\Domain.pdb
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\obj\Debug\netcoreapp3.1\Service.csprojAssemblyReference.cache
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\obj\Debug\netcoreapp3.1\Service.AssemblyInfoInputs.cache
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\obj\Debug\netcoreapp3.1\Service.AssemblyInfo.cs
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\obj\Debug\netcoreapp3.1\Service.csproj.CoreCompileInputs.cache
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\obj\Debug\netcoreapp3.1\Service.csproj.CopyComplete
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\obj\Debug\netcoreapp3.1\Service.dll
+C:\Users\rafae\OneDrive\Documentos\coding\dotnet\fornecedores\fornecedores\Service\obj\Debug\netcoreapp3.1\Service.pdb
